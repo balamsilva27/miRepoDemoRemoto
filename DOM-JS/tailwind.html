@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo Tailwind CSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <span class="text-xl font-bold text-cyan-600">Tailwind CSS</span>
+
+            <div class="flex items-center space-x-4">
+                <a href="#cards" class="text-gray-600 hover:text-cyan-600">Cards</a>
+                <a href="#form" class="text-gray-600 hover:text-cyan-600">Formulario</a>
+                <a href="https://tailwindcss.com" target="_blank" class="text-gray-600 hover:text-cyan-600">
+                    Sitio oficial
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="max-w-6xl mx-auto px-6 mt-10">
+        <div
+            class="bg-white rounded-2xl shadow-lg p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+                    Framework: <span class="text-cyan-600">Tailwind CSS</span>
+                </h1>
+                <p class="mt-3 text-gray-600 max-w-xl">
+                    Demo sencilla construida con clases utilitarias (utility-first). Incluye navegación,
+                    un hero, tarjetas, formulario y un botón externo.
+                </p>
+
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <span
+                        class="px-3 py-1 rounded-full bg-cyan-50 text-cyan-700 text-sm font-medium">Utility-first</span>
+                    <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">Responsive</span>
+                    <span class="px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-sm font-medium">Sin CSS
+                        extra</span>
+                </div>
+            </div>
+
+            <div class="w-full md:w-80">
+                <div class="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl shadow-xl p-6 text-white">
+                    <p class="text-sm opacity-90">Instalación rápida (CDN)</p>
+                    <code class="block mt-2 text-xs bg-white/10 rounded-lg p-3 overflow-x-auto">
+            &lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;
+          </code>
+                    <p class="mt-4 text-sm opacity-90">
+                        Ideal para prototipos y demostraciones.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: CARDS -->
+    <section id="cards" class="max-w-6xl mx-auto px-6 mt-12">
+        <h2 class="text-2xl font-bold text-gray-900">Sección de 3 Cards</h2>
+        <p class="text-gray-600 mt-2">
+            Ejemplo de componentes construidos con utilidades: fondo, sombra, bordes, tipografía y grid responsive.
+        </p>
+
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Card 1 -->
+            <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <img class="w-full h-40 object-cover"
+                    src="https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=1200&q=60"
+                    alt="Diseño UI" />
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Diseño rápido</h3>
+                    <p class="text-gray-600 mt-2 text-sm">
+                        Estiliza con clases como <span class="font-mono">p-5</span>, <span
+                            class="font-mono">rounded-2xl</span> y <span class="font-mono">shadow-md</span>.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <img class="w-full h-40 object-cover"
+                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=60"
+                    alt="Código" />
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Utility-first</h3>
+                    <p class="text-gray-600 mt-2 text-sm">
+                        En lugar de CSS largo, usas utilidades pequeñas: <span class="font-mono">text-*</span>, <span
+                            class="font-mono">bg-*</span>, <span class="font-mono">flex</span>, <span
+                            class="font-mono">grid</span>.
+                    </p>
+                </div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition">
+                <img class="w-full h-40 object-cover"
+                    src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=60"
+                    alt="Equipo" />
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold">Responsive</h3>
+                    <p class="text-gray-600 mt-2 text-sm">
+                        Cambia el layout por breakpoint: <span class="font-mono">grid-cols-1</span> y <span
+                            class="font-mono">md:grid-cols-3</span>.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- SECTION: FORM -->
+    <section id="form" class="max-w-6xl mx-auto px-6 mt-12 mb-16">
+        <h2 class="text-2xl font-bold text-gray-900">Formulario</h2>
+        <p class="text-gray-600 mt-2">
+            Inputs estilizados con utilidades: bordes, padding, ancho completo y estados focus.
+        </p>
+
+        <div class="mt-6 bg-white rounded-2xl shadow-lg p-6 md:p-8 max-w-2xl">
+            <form>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" placeholder="Tu nombre"
+                            class="mt-1 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-gray-700">Correo</label>
+                        <input type="email" placeholder="correo@ejemplo.com"
+                            class="mt-1 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <label class="text-sm font-medium text-gray-700">Mensaje</label>
+                    <textarea rows="4" placeholder="Escribe un mensaje..."
+                        class="mt-1 w-full border border-gray-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-cyan-500"></textarea>
+                </div>
+
+                <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                    <button type="button"
+                        class="bg-cyan-600 text-white px-5 py-3 rounded-lg font-semibold hover:bg-cyan-700 transition">
+                        Enviar (demo)
+                    </button>
+
+                    <a href="https://tailwindcss.com" target="_blank"
+                        class="inline-flex items-center justify-center bg-gray-900 text-white px-5 py-3 rounded-lg font-semibold hover:bg-black transition">
+                        Ir a tailwindcss.com
+                    </a>
+                </div>
+
+
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t">
+        <div class="max-w-6xl mx-auto px-6 py-6 text-sm text-gray-500">
+            Demo Tailwind CSS — Balam Eduardo Silva Domínguez
+        </div>
+    </footer>
+
+</body>
+
+</html>
