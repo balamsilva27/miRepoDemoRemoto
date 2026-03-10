@@ -1,0 +1,27 @@
+{
+  "name": "first-backend",
+  "version": "1.0.0",
+  "description": "Primer ejercicio de nodejs",
+  "homepage": "https://github.com/balamsilva27/miRepoDemoRemoto#readme",
+  "bugs": {
+    "url": "https://github.com/balamsilva27/miRepoDemoRemoto/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/balamsilva27/miRepoDemoRemoto.git"
+  },
+  "license": "ISC",
+  "author": "Balam Eduardo",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
