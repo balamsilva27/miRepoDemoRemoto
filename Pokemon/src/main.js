@@ -34,7 +34,7 @@ document.querySelector('#app').innerHTML = `
     <main class="relative z-10 -mt-16 px-6 pb-18 md:px-10 lg:px-14">
       <div class="mx-auto grid w-full max-w-6xl gap-7">
         <section id="pokemon-container" aria-live="polite">
-          <p class="rounded-[2rem] border border-white/40 bg-white/60 px-6 py-10 text-center font-sans text-base font-bold text-stone-700 shadow-[0_18px_50px_rgba(58,26,12,0.08)] backdrop-blur-md">
+          <p class="rounded-4xl border border-white/40 bg-white/60 px-6 py-10 text-center font-sans text-base font-bold text-stone-700 shadow-[0_18px_50px_rgba(58,26,12,0.08)] backdrop-blur-md">
             Cargando pokemones...
           </p>
         </section>
