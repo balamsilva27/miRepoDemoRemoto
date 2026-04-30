@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import jwt from "jsonwebtoken";
 
-//import auth from "./cookieHttpOnly/auth.js";
+import auth from "./cookieHttpOnly/auth.js";
 
 const app = express();
 app.use(express.json());
