@@ -1,0 +1,23 @@
+{
+  "name": "chatmsg-fase2-backend",
+  "version": "1.0.0",
+  "description": "Backend Fase 2 - Chat con Redis y cookies HttpOnly",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "@socket.io/redis-adapter": "^8.2.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "redis": "^4.6.12",
+    "socket.io": "^4.7.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
