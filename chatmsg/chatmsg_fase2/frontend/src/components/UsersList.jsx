@@ -7,7 +7,7 @@ function UsersList({ users }) {
           <li key={user.userId}>{user.username}</li>
         ))}
       </ul>
-      {users.length === 0 && <p className="empty-state">Sin usuarios en la sala.</p>}
+      {users.length === 0 && <p className="empty-state">Sin usuarios en el chat.</p>}
     </aside>
   );
 }

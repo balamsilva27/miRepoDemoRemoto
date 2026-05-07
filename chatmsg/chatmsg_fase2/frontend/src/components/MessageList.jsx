@@ -20,14 +20,14 @@ function MessageList({ messages }) {
     <div className="message-list" ref={listRef}>
       {messages.length === 0 && <p className="empty-state">Sin mensajes todavia.</p>}
       {messages.map((message) => (
-        <article key={message.id} className={`message ${message.type === 'system' ? 'system' : 'normal'}`}>
+        <article key={message.id ?? `${message.user}-${message.time}-${message.text}`} className={`message ${message.type === 'system' ? 'system' : 'normal'}`}>
           {message.type === 'system' ? (
             <p>{message.text}</p>
           ) : (
             <>
               <header>
-                <strong>{message.username}</strong>
-                <time>{formatTime(message.createdAt)}</time>
+                <strong>{message.user}</strong>
+                <time>{message.time}</time>
               </header>
               <p>{message.text}</p>
             </>

@@ -9,7 +9,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [socket, setSocket] = useState(null);
   const [connected, setConnected] = useState(false);
-  const [room, setRoom] = useState('');
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
@@ -78,10 +77,15 @@ function App() {
       setUsers(payload.users || []);
     }
 
+    function handleHistory(history) {
+      setMessages(history);
+    }
+
     socket.on('connect', handleConnect);
     socket.on('disconnect', handleDisconnect);
     socket.on('connect_error', handleConnectError);
-    socket.on('message:new', handleMessage);
+    socket.on('server_history', handleHistory);
+    socket.on('server_message', handleMessage);
     socket.on('room:users', handleRoomUsers);
 
     if (!socket.connected) {
@@ -92,7 +96,8 @@ function App() {
       socket.off('connect', handleConnect);
       socket.off('disconnect', handleDisconnect);
       socket.off('connect_error', handleConnectError);
-      socket.off('message:new', handleMessage);
+      socket.off('server_history', handleHistory);
+      socket.off('server_message', handleMessage);
       socket.off('room:users', handleRoomUsers);
     };
   }, [socket]);
@@ -104,19 +109,9 @@ function App() {
     connectSocket();
   }
 
-  function handleJoinRoom(nextRoom) {
-    const cleanRoom = nextRoom.trim();
-    if (!socket || !cleanRoom) return;
-
-    setMessages([]);
-    setUsers([]);
-    setRoom(cleanRoom);
-    socket.emit('room:join', { room: cleanRoom });
-  }
-
   function handleSendMessage(text) {
-    if (!socket || !room) return;
-    socket.emit('message:send', { room, text });
+    if (!socket) return;
+    socket.emit('client_message', { text });
   }
 
   async function handleLogout() {
@@ -124,7 +119,6 @@ function App() {
     socketRef.current = null;
     setSocket(null);
     setConnected(false);
-    setRoom('');
     setMessages([]);
     setUsers([]);
     setUser(null);
@@ -143,11 +137,9 @@ function App() {
         <ChatRoom
           user={user}
           connected={connected}
-          room={room}
           messages={messages}
           users={users}
           error={error}
-          onJoinRoom={handleJoinRoom}
           onSendMessage={handleSendMessage}
           onLogout={handleLogout}
         />

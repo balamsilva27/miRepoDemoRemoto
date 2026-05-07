@@ -135,7 +135,7 @@ Prueba:
 
 1. Ambos abren su frontend.
 2. Ambos crean sesion con nombres distintos.
-3. Ambos entran a la misma sala exacta, por ejemplo `sala-general`.
+3. Ambos entran al chat proporcionando únicamente su nombre de usuario.
 4. Companero A envia un mensaje.
 5. Companero B debe verlo aunque este conectado a otro backend.
 6. Companero B responde.
@@ -166,7 +166,7 @@ El frontend usa `fetch(..., { credentials: "include" })`. El valor de la cookie 
 | `message:new` | servidor -> cliente | Mensaje normal o de sistema |
 | `room:users` | servidor -> cliente | `{ room, users }` |
 
-`message:send` usa `io.to(room).emit(...)`, por lo que el mensaje tambien llega al remitente. Con Redis adapter, el evento tambien llega a otros servidores unidos a la misma sala.
+`message:send` usa `io.emit(...)`, por lo que el mensaje llega a todos. Con Redis adapter, el evento también llega a otros servidores.
 
 ## Cookies, CORS y Socket.IO
 
@@ -185,7 +185,7 @@ Si se usa un balanceador o un solo dominio delante de multiples servidores, Sock
 Verificar:
 
 - Ambos usan el mismo `REDIS_URL`.
-- Ambos entraron a la misma sala exacta.
+- Ambos entraron al sistema (el chat ahora es global).
 - Ambos backends estan conectados a Redis.
 - No hay errores de CORS.
 - El frontend apunta al backend correcto con `VITE_API_URL`.

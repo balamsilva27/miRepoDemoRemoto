@@ -12,44 +12,29 @@ function parseCookies(cookieHeader = '') {
   }, {});
 }
 
-function normalizeRoom(payload) {
-  const room = typeof payload === 'string' ? payload : payload?.room;
-  return typeof room === 'string' ? room.trim() : '';
-}
-
 function normalizeText(payload) {
-  const text = payload?.text;
+  const text = typeof payload === 'string' ? payload : payload?.text;
   return typeof text === 'string' ? text.trim().slice(0, 1000) : '';
 }
 
-function systemMessage(room, text) {
+function systemMessage(text) {
   return {
     id: crypto.randomUUID(),
     type: 'system',
-    room,
+    user: 'Sistema',
     text,
-    createdAt: new Date().toISOString()
+    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
   };
 }
 
-async function emitRoomUsers(io, room) {
-  const sockets = await io.in(room).fetchSockets();
+async function emitUsers(io) {
+  const sockets = await io.fetchSockets();
   const users = sockets
     .map((socket) => socket.data.user)
     .filter(Boolean)
     .map((user) => ({ userId: user.userId, username: user.username }));
 
-  io.to(room).emit('room:users', { room, users });
-}
-
-async function leaveCurrentRoom(io, socket, room) {
-  const user = memoryStore.getSocketUser(socket.id);
-  if (!user || !room) return;
-
-  socket.leave(room);
-  memoryStore.setSocketRoom(socket.id, null);
-  io.to(room).emit('message:new', systemMessage(room, `${user.username} salio de la sala`));
-  await emitRoomUsers(io, room);
+  io.emit('room:users', { users });
 }
 
 export function setupSocket(io) {
@@ -65,61 +50,43 @@ export function setupSocket(io) {
     next();
   });
 
-  io.on('connection', (socket) => {
+  io.on('connection', async (socket) => {
     memoryStore.addSocket(socket.id, socket.data.user);
 
-    socket.on('room:join', async (payload) => {
-      const room = normalizeRoom(payload);
-      if (!room) {
-        return socket.emit('chat:error', { message: 'Room is required' });
-      }
+    const user = memoryStore.getSocketUser(socket.id);
+    if (user) {
+      io.emit('server_message', systemMessage(`${user.username} entro al chat`));
+      await emitUsers(io);
+    }
 
-      const user = memoryStore.getSocketUser(socket.id);
-      if (!user) return;
-
-      const previousRoom = memoryStore.getSocketRoom(socket.id);
-      if (previousRoom && previousRoom !== room) {
-        await leaveCurrentRoom(io, socket, previousRoom);
-      }
-
-      socket.join(room);
-      memoryStore.setSocketRoom(socket.id, room);
-      io.to(room).emit('message:new', systemMessage(room, `${user.username} entro a la sala`));
-      await emitRoomUsers(io, room);
-    });
-
-    socket.on('message:send', (payload) => {
-      const room = normalizeRoom(payload);
+    socket.on('client_message', (payload) => {
       const text = normalizeText(payload);
       const user = memoryStore.getSocketUser(socket.id);
 
       if (!user) return;
-      if (!room || !text) {
-        return socket.emit('chat:error', { message: 'Room and text are required' });
+      if (!text) {
+        return socket.emit('chat:error', { message: 'Text is required' });
       }
 
       const message = {
         id: crypto.randomUUID(),
         type: 'message',
-        userId: user.userId,
-        username: user.username,
-        room,
+        user: user.username,
         text,
-        createdAt: new Date().toISOString()
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
-      io.to(room).emit('message:new', message);
+      io.emit('server_message', message);
     });
 
     socket.on('disconnect', async () => {
       const user = memoryStore.getSocketUser(socket.id);
-      const room = memoryStore.getSocketRoom(socket.id);
       memoryStore.removeSocket(socket.id);
 
-      if (!user || !room) return;
+      if (!user) return;
 
-      io.to(room).emit('message:new', systemMessage(room, `${user.username} se desconecto`));
-      await emitRoomUsers(io, room);
+      io.emit('server_message', systemMessage(`${user.username} se desconecto`));
+      await emitUsers(io);
     });
   });
 }
